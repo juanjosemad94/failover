@@ -93,9 +93,29 @@ To create, configure, and deploy the function app:
 
     ![](Fig02-Function-App-UI.png "Function App screenshot")
 
-3.  Navigate to the newly created function app and click the [Platform features](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings#platform-features-tab) tab.
+3. Ensure that Runtime stack selected is 'PowerShell Core' and it is running the latest version. Enable App Insights so you can view the function app running to help with troubleshooting if required.
 
-4.  Click [Application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings#settings) and add the following variables and values:
+   ![](Fig03-App-Insights.png "App Insights Screenshot")
+
+4. Leave Public access settings as default, create a new storage account for diagnostics if required and disable continuous deployment/Github unless required.
+
+5.  Once the function app has been created, navigate to the newly created function app and click the [Deployment Center](https://learn.microsoft.com/en-us/azure/azure-functions/functions-continuous-deployment) tab. Select External Git:
+
+    1.  **Choose Source**: External Git
+
+    2.  **Repository URL**: <https://github.com/expoearchie/azurefunction-nva-udr-failover/>  
+        Please change it in the appropriate Repository URL.
+
+    3.  **Branch**: *main*  
+        Please change it in the appropriate Branch.
+
+    4.  **Repository Type**: Public unless using your own Private Github repo (which will require Github credentials)
+
+   ![](Fig04-External-Git.png "Deployment Settings screenshot")
+   
+6. Click Save to download the Azure function app files from the GitHub repo to your Azure Function.
+  
+7.  Click [Configuration](https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal) and under the **Application Settings** tab add/modify the following variables and values:
 
 | Variable                    | Value                                                                                   |
 |-----------------------------|-----------------------------------------------------------------------------------------|
@@ -125,23 +145,6 @@ To create, configure, and deploy the function app:
 | FW1PORT  | TCP port on which the first NVA firewall virtual machine instance is listening             |
 | FW2FQDN  | Publicly accessible FQDN or IP address for second NVA firewall virtual machine instance    |
 | FW2PORT  | TCP port on which the second NVA firewall virtual machine instance is listening            |
-
-6.  On the **Platform features** tab, click **Deployment options**, and then
-    click the **Setup** button.
-
-7.  To set up a new deployment option, specify the following configuration:
-
-    1.  **Choose Source**: External Repository
-
-    2.  **Repository URL**: <https://github.com/[repo-name]/ha-nva-fo>  
-        Please change it in the appropriate Repository URL.
-
-    3.  **Branch**: *patch-meraki-vmx*  
-        Please change it in the appropriate Branch.
-
-    4.  **Repository Type**: Git
-
-    ![](Fig03-azure-portal-deployment-options.png "Azure Portal Deployment Options screenshot")
 
 8.  Click **OK** to finish setting up the function app code.
 
