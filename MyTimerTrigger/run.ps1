@@ -232,13 +232,19 @@ Function Get-Subscriptions
 # Main code block for Azure function app                       
 #--------------------------------------------------------------------------
 
-$Password = ConvertTo-SecureString $env:SP_PASSWORD -AsPlainText -Force
-$Credential = New-Object System.Management.Automation.PSCredential ($env:SP_USERNAME, $Password)
-$AzureEnv = Get-AzEnvironment -Name $env:AZURECLOUD
-Add-AzAccount -ServicePrincipal -Tenant $env:TENANTID -Credential $Credential -SubscriptionId $env:SUBSCRIPTIONID -Environment $AzureEnv
+#$Password = ConvertTo-SecureString $env:SP_PASSWORD -AsPlainText -Force
+#$Credential = New-Object System.Management.Automation.PSCredential ($env:SP_USERNAME, $Password)
+#$AzureEnv = Get-AzEnvironment -Name $env:AZURECLOUD
+#Add-AzAccount -ServicePrincipal -Tenant $env:TENANTID -Credential $Credential -SubscriptionId $env:SUBSCRIPTIONID -Environment $AzureEnv
 
-$Context = Get-AzContext
-Set-AzContext -Context $Context
+#$Context = Get-AzContext
+#Set-AzContext -Context $Context
+
+#--------------------------------------------------------------------------
+# Use Managed Identity                   
+#--------------------------------------------------------------------------
+
+Connect-AzAccount -Identity
 
 $Script:PrimaryInts = @()
 $Script:SecondaryInts = @()
